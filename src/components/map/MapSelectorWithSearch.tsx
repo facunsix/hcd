@@ -66,7 +66,7 @@ export function MapSelectorWithSearch({
 
           try {
             const response = await fetch(
-              `/nominatim/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`,
+              `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`,
               { headers: { 'Accept': 'application/json' } }
             );
             const data = await response.json();
@@ -102,14 +102,14 @@ export function MapSelectorWithSearch({
     };
   }, []);
 
-  // Función de búsqueda automática
+  // Función de búsqueda automática (solo primer resultado)
   const searchPlaces = async (query: string) => {
     if (!query.trim() || query.length < 3) return;
 
     setIsSearching(true);
     try {
       const response = await fetch(
-        `/nominatim/search?format=json&q=${encodeURIComponent(query)}&limit=1&countrycodes=ar&viewbox=-56.5,-26.5,-55.5,-28.5&bounded=1&addressdetails=1`,
+        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1&countrycodes=ar&viewbox=-56.5,-26.5,-55.5,-28.5&bounded=1&addressdetails=1`,
         { headers: { 'Accept': 'application/json' } }
       );
       const data: SearchResult[] = await response.json();
