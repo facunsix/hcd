@@ -26,7 +26,8 @@ export function MapSelectorWithSearch({
   const markerRef = useRef<any>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
-  const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+ const searchTimeoutRef = useRef<number | null>(null);
+
 
   // Inicializar mapa
   useEffect(() => {
