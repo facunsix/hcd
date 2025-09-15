@@ -165,13 +165,16 @@ export function TaskMap({ tasks }: TaskMapProps) {
     }
   };
 
-  // Update markers when tasks change
-  useEffect(() => {
-    if (mapInstanceRef.current) {
-      const L = require('leaflet');
+// Update markers when tasks change
+useEffect(() => {
+  if (mapInstanceRef.current) {
+    (async () => {
+      const L = (await import('leaflet')).default; // ✅ CORRECCIÓN AQUÍ
       addTaskMarkers(L, mapInstanceRef.current);
-    }
-  }, [tasks]);
+    })();
+  }
+}, [tasks]);
+
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
