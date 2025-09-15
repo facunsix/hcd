@@ -110,23 +110,27 @@ export function MapSelector({ onLocationSelect, selectedLocation, height = "300p
     };
   }, []);
 
-  // Update marker when selectedLocation changes
-  useEffect(() => {
-    if (mapInstanceRef.current && selectedLocation) {
+// Update marker when selectedLocation changes
+useEffect(() => {
+  if (mapInstanceRef.current && selectedLocation) {
+    (async () => {
+      const L = (await import('leaflet')).default; // ✅ corrección
+
       // Remove existing marker
       if (markerRef.current) {
         mapInstanceRef.current.removeLayer(markerRef.current);
       }
 
       // Add new marker
-      const L = require('leaflet');
       markerRef.current = L.marker([selectedLocation.lat, selectedLocation.lng]).addTo(mapInstanceRef.current);
       if (selectedLocation.address) {
         markerRef.current.bindPopup(selectedLocation.address);
       }
       mapInstanceRef.current.setView([selectedLocation.lat, selectedLocation.lng], 15);
-    }
-  }, [selectedLocation]);
+    })();
+  }
+}, [selectedLocation]);
+
 
   return (
     <div className="space-y-2">
